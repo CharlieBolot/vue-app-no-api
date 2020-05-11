@@ -65,8 +65,8 @@
         <ul id="test">
               
             <li >
-
-               Employé(e) : <input v-model="item.name"> Date début : <input type="date" v-model="item.datedebut"> Date fin <input type="date" v-model="item.datefin"> E.T.P : <input type="number" min=0 max=1 step=0.1 v-model="item.ETP">  <span v-if="item.datefin&&item.datedebut&&item.name&&item.ETP">Temps de travail : {{Calctravail}} jours</span> <span v-if="item.datefin&&item.datedebut&&item.name&&item.ETP"> Congé : {{Calcconge}} jours</span>      
+ 
+               Employé(e) : <input v-model="item.name"> Date début : <input type="date" v-model="item.datedebut"> Date fin : <input type="date" v-model="item.datefin"> Heures hebdomadaires : <input type="number" min=0  step=1 v-model="item.Heures"><span v-if="item.datefin&&item.datedebut&&item.name&&item.Heures"> ETP : {{Calcetp}} </span>  <span v-if="item.datefin&&item.datedebut&&item.name&&item.Heures">Temps de travail : {{Calctravail}} jours</span> <span v-if="item.datefin&&item.datedebut&&item.name&&item.Heures"> Congé : {{Calcconge}} jours</span>      
 
             </li>
             
@@ -86,15 +86,25 @@ var demo = new Vue({
         	{name: '',
         	datedebut: "",
 			datefin: "",
+            Heures:0,
 			ETP:0,
             conge:0
             }, 
     },
    
    computed:{
+    Calcetp:function ()
+    {
+        var hhebdo = this.item.Heures;
+        var ETP = Math.round(hhebdo/35*10)/10;
+        return ETP;
+        
+    },
+    
+    
     Calcconge:function ()
     {
-       // console.log(this.item.datedebut);
+       
         var datedebut = new Date(this.item.datedebut);
         var datefin = new Date(this.item.datefin);
         datedebut = datedebut.getTime() / 86400000;
@@ -103,7 +113,7 @@ var demo = new Vue({
        
         Nbrjr = datefin - datedebut;
         
-        conge = Math.round(Nbrjr * this.item.ETP * (2.08/28)*10)/10;
+        conge = Math.round(Nbrjr * (this.item.Heures/35) * (2.08/28)*10)/10;
         return conge;
     },
     Calctravail:function ()
@@ -116,7 +126,7 @@ var demo = new Vue({
        
         Nbrjr = datefin - datedebut;
         
-        travail = Math.round(Nbrjr * this.item.ETP *10)/10;
+        travail = Math.round(Nbrjr * (this.item.Heures/35) *10)/10;
         return travail;
 
     }
