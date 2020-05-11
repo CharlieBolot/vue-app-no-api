@@ -6,8 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Application RH - gestion CDD</title>
 
-    <style> /*A modifier*/
+    <style> 
+ 
+    @import url(https://fonts.googleapis.com/css?family=Cookie);
+    body{
+    	font:25px/1.3 'Open Sans', sans-serif;
+    	color: #5e5b64;
+    	text-align:center;
+    }
 
+
+
+    form{
+    	background-color: #61a1bc;
+    	border-radius: 5px;
+    	box-shadow: 0 1px 1px #ccc;
+    	padding: 35px 60px;
+    	margin: 50px auto;
+        
+    }
+
+    form h1{
+    	color:#fff;
+    	font-size:64px;
+    	font-family:'Cookie', cursive;
+    	font-weight: normal;
+    	line-height:1;
+    	text-shadow:0 3px 0 rgba(0,0,0,0.1);
+    }
+
+    form ul{
+    	list-style:none;
+    	color:#fff;   	
+    	font-weight:bold;
+    	text-align: left;
+        align-content: center;
+        text-align: center;
+    	
+    }
+
+    form ul li{
+    	padding:20px 100px;
+    	background-color:#37b657b9;
+    	margin-bottom:8px;
+        
+    	box-shadow:0 1px 1px rgba(0,0,0,0.1);
+    }
 
     </style>
 
@@ -17,30 +61,16 @@
     <form id="main" v-cloak >
 
         <h1>Service RH - Gestion des CDD</h1>
-
-       
+      
         <ul id="test">
-    
-                
+              
             <li >
 
-               Employee : <input v-model="item.name"> Date début : <input type="date" v-model="item.datedebut"> Date fin <input type="date" v-model="item.datefin"> E.T.P : <input type="number" min=0 max=1 step=0.1 v-model="item.ETP"> <span v-if="item.datefin&&item.datedebut&&item.name&&item.ETP">Congé : {{Calcconge}}</span>       
-               
-            
+               Employé(e) : <input v-model="item.name"> Date début : <input type="date" v-model="item.datedebut"> Date fin <input type="date" v-model="item.datefin"> E.T.P : <input type="number" min=0 max=1 step=0.1 v-model="item.ETP">  <span v-if="item.datefin&&item.datedebut&&item.name&&item.ETP">Temps de travail : {{Calctravail}} jours</span> <span v-if="item.datefin&&item.datedebut&&item.name&&item.ETP"> Congé : {{Calcconge}} jours</span>      
 
             </li>
-
-
             
         </ul>
-    
-        
-
-           
-        
-	
-	
- 	
 
 </div>
 
@@ -75,12 +105,23 @@ var demo = new Vue({
         
         conge = Math.round(Nbrjr * this.item.ETP * (2.08/28)*10)/10;
         return conge;
+    },
+    Calctravail:function ()
+    {
+        var datedebut = new Date(this.item.datedebut);
+        var datefin = new Date(this.item.datefin);
+        datedebut = datedebut.getTime() / 86400000;
+        
+        datefin = datefin.getTime() / 86400000;
+       
+        Nbrjr = datefin - datedebut;
+        
+        travail = Math.round(Nbrjr * this.item.ETP *10)/10;
+        return travail;
+
     }
    }
 });
-
-
-	
     
 </script>
 </body>
