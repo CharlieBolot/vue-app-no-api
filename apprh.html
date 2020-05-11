@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Application RH - gestion CDD</title>
+
+    <style> /*A modifier*/
+
+
+    </style>
+
+</head>
+<body>
+
+    <form id="main" v-cloak >
+
+        <h1>Service RH - Gestion des CDD</h1>
+
+       
+        <ul id="test">
+    
+                
+            <li >
+
+               Employee : <input v-model="item.name"> Date début : <input type="date" v-model="item.datedebut"> Date fin <input type="date" v-model="item.datefin"> E.T.P : <input type="number" min=0 max=1 step=0.1 v-model="item.ETP"> <span v-if="item.datefin&&item.datedebut&&item.name&&item.ETP">Congé : {{Calcconge}}</span>       
+               
+            
+
+            </li>
+
+
+            
+        </ul>
+    
+        
+
+           
+        
+	
+	
+ 	
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.5/vue.min.js"></script>
+<script>
+
+// Creating a new Vue instance and pass in an options object.
+var demo = new Vue({
+    el: '#main',
+    data: {
+    	bouboul:false,
+        item:
+        	{name: '',
+        	datedebut: "",
+			datefin: "",
+			ETP:0,
+            conge:0
+            }, 
+    },
+   
+   computed:{
+    Calcconge:function ()
+    {
+       // console.log(this.item.datedebut);
+        var datedebut = new Date(this.item.datedebut);
+        var datefin = new Date(this.item.datefin);
+        datedebut = datedebut.getTime() / 86400000;
+        
+        datefin = datefin.getTime() / 86400000;
+       
+        Nbrjr = datefin - datedebut;
+        
+        conge = Math.round(Nbrjr * this.item.ETP * (2.08/28)*10)/10;
+        return conge;
+    }
+   }
+});
+
+
+	
+    
+</script>
+</body>
+</html>
