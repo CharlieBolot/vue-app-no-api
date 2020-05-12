@@ -96,10 +96,16 @@
                         </div>     
                     </form>
                 </div>
-                <div class="col-lg-6 zones">
-                    <span v-if="item.datefin&&item.datedebut&&item.name&&item.Heures">ETP : {{Calcetp}} </span>
-                    <span v-if="item.datefin&&item.datedebut&&item.name&&item.Heures">Temps de travail : {{Calctravail}} jours</span>
-                    <span v-if="item.datefin&&item.datedebut&&item.name&&item.Heures">Congé : {{Calcconge}} jours</span>
+                <div class="col-lg-6 zones col">
+                    <div class="col-lg-12">
+                        <span v-if="item.datefin&&item.datedebut&&item.name&&item.Heures">ETP : {{Calcetp}} </span>
+                    </div>
+                    <div class="col-lg-12">
+                        <span v-if="item.datefin&&item.datedebut&&item.name&&item.Heures">Temps de travail : {{Calctravail}} jours</span>
+                    </div>
+                    <div class="col-lg-12">
+                        <span v-if="item.datefin&&item.datedebut&&item.name&&item.Heures">Congé : {{Calcconge}} jours</span>
+                    </div>
                 </div>    
             </div>
                 
@@ -156,6 +162,8 @@ var demo = new Vue({
         conge = Math.round(Nbrjr * (this.item.Heures/35) * (2.08/28)*10)/10;
         if(conge<3){
             conge = 0 ;
+        }else if(conge > 25 ){
+            conge = 25;
         }
         return conge;
     },
